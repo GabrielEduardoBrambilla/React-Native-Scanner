@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
-import { Camera, CameraType, CameraView } from 'expo-camera/next'
-
+import { Camera, CameraView } from 'expo-camera/next'
 import React, { useEffect, useState } from 'react'
+import { theme as Theme } from '@/constants/Theme'
+import { COLORS } from '@/constants/Colors'
 
 export function App() {
   const [hasPermission, setHasPermission] = useState<Boolean>(false)
@@ -17,6 +18,7 @@ export function App() {
   }) => {
     setText(data)
     setScanned(true)
+
     alert(`Bar code with type ${type} and data ${data} has been scanned!`)
   }
 
@@ -78,9 +80,10 @@ export function App() {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     height: 750,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.blue[200],
     alignItems: 'center',
     justifyContent: 'center'
   },
