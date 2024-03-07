@@ -1,23 +1,43 @@
-import * as React from 'react'
-import { AppRegistry } from 'react-native'
-import {
-  MD2LightTheme,
-  MD3LightTheme,
-  PaperProvider,
-  Text
-} from 'react-native-paper'
-import { expo as appName } from '../app.json'
-import { App } from './app'
-import { Login } from './login'
-import { theme as Theme } from '@/constants/Theme'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { App } from './screen/app'
+import Login from './screen/login'
+import { Button } from 'react-native-paper'
 
-export default function Main() {
+const Stack = createNativeStackNavigator()
+
+export default function index() {
   return (
-    <PaperProvider theme={Theme}>
-      <Login />
-      {/* <App /> */}
-    </PaperProvider>
+    <AuthProvider>
+      <Layout></Layout>
+    </AuthProvider>
   )
 }
 
-AppRegistry.registerComponent(appName.name, () => Main)
+export const Layout = () => {
+  const { authState, onLogout } = useAuth()
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {authState?.authenticated ? (
+          <Stack.Screen
+            name="app"
+            component={App}
+            options={{
+              headerRight: () => (
+                <Button onPress={onLogout}>
+                  <Text>Login</Text>
+                </Button>
+              )
+            }}
+          />
+        ) : (
+          <Stack.Screen name="login" component={Login} />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
