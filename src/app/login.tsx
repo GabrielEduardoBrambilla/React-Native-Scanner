@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { TextInput, Button } from 'react-native-paper'
-import { COLORS } from '@/constants/Colors'
+import { COLORS } from '../constants/Colors'
 import { StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Formik, FormikProps } from 'formik'
 import { router } from 'expo-router'
@@ -28,7 +28,7 @@ export default function Login() {
           initialValues={{ ra: '', password: '' }}
           validationSchema={formValidationSchema}
           onSubmit={(val, actions) => {
-            // onLogin(val.ra, val.password)
+            // onLogin('2039102', 'sadsa')
             actions.resetForm()
           }}
         >
@@ -56,7 +56,7 @@ export default function Login() {
                 mode="contained"
                 onPress={() => props.handleSubmit()}
               >
-                Fazer login
+                <Text>Fazer login</Text>
               </Button>
             </View>
           )}

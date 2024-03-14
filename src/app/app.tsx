@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import { Camera, CameraView } from 'expo-camera/next'
 import React, { useEffect, useState } from 'react'
-import { theme as Theme } from '@/constants/Theme'
-import { COLORS } from '@/constants/Colors'
+import { theme as Theme } from '../constants/Theme'
+import { COLORS } from '../constants/Colors'
 
 export function App() {
   const [hasPermission, setHasPermission] = useState<Boolean>(false)

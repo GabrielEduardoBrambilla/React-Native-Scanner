@@ -1,6 +1,12 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import axios from 'axios'
-import * as SecureStore from 'expo-secure-store'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
+// import axios from 'axios'
+// import * as SecureStore from 'expo-secure-store'
 
 const response = [
   { ra: 123458, password: 123123, studentName: 'John' },
@@ -34,22 +40,29 @@ const response = [
   { ra: 221349, password: 123123, studentName: 'Avery' },
   { ra: 334478, password: 123123, studentName: 'Sebastian' }
 ]
+interface AuthProviderProps {
+  children: ReactNode // Define children prop as ReactNode
+}
 
 interface AuthProps {
-  authState?: { token: string | null; authenticated: boolean | null }
-  onLogin?: (ra: string, password: string) => Promise<any>
-  onLogout?: () => Promise<any>
+  authState: { token: string | null; authenticated: boolean | null }
+  onLogin: (ra: string, password: string) => Promise<any>
+  onLogout: () => Promise<any>
 }
 
 const TOKEN_KEY = 'my-jwt'
 export const API_URL = 'https://api.developbetterapps.com'
-const AuthContext = createContext<AuthProps>({})
+const AuthContext = createContext<AuthProps>({
+  authState: { token: null, authenticated: null },
+  onLogin: () => Promise.resolve(),
+  onLogout: () => Promise.resolve()
+})
 
 export const useAuth = () => {
   return useContext(AuthContext)
 }
 
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authState, setAuthState] = useState<{
     token: string | null
     authenticated: boolean | null
@@ -73,6 +86,8 @@ export const AuthProvider = ({ children }: any) => {
       studentExist
         ? setAuthState({ token: 'logged in', authenticated: true })
         : setAuthState({ token: '', authenticated: false })
+
+      setAuthState({ token: 'logged in', authenticated: true })
     } catch (e) {
       return { error: true, msg: (e as any).response.data.msg }
     }
@@ -93,5 +108,5 @@ export const AuthProvider = ({ children }: any) => {
     authState
   }
 
-  return <AuthContext.Provider value={value}> {children}</AuthContext.Provider>
+  return <AuthContext.Provider value={value}>{children} </AuthContext.Provider>
 }
