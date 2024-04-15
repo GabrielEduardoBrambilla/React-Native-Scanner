@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, View, Button } from 'react-native'
 import { Camera, CameraView } from 'expo-camera/next'
 import React, { useEffect, useState } from 'react'
 import { theme as Theme } from '../constants/Theme'
-import { COLORS } from '../constants/Colors'
+import { COLORS } from '../constants/Styles/Colors'
 import { useAuth } from '../context/AuthContext'
+import { TextInput, Text } from 'react-native-paper'
 
 export function App() {
   const [hasPermission, setHasPermission] = useState<Boolean>(false)
@@ -67,11 +68,21 @@ export function App() {
         />
       </View>
       <Text style={styles.maintext}>{text}</Text>
-      <Button
+      {/* <Button
         title={'Scan again?'}
         onPress={() => setScanned(false)}
         color="tomato"
-      />
+      /> */}
+
+      <Text variant="headlineSmall">
+        Professor: <Text variant="bodyMedium">Gustavo Colombeli</Text>
+      </Text>
+      <Text variant="headlineSmall">
+        Dia: <Text variant="bodyMedium"> 15/04/2023</Text>
+      </Text>
+      <Text variant="headlineSmall">
+        Presença: <Text variant="bodyMedium"> A confirmar</Text>
+      </Text>
       <Button title={'Logout?'} onPress={onLogout} color="tomato" />
       {scanned && (
         <Button
@@ -106,5 +117,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 30,
     backgroundColor: 'tomato'
+  },
+  text: {
+    display: 'flex',
+    alignItems: 'center',
+    color: COLORS.dark.text
   }
 })

@@ -36,7 +36,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const onLogin = async (ra: string, password: string) => {
     try {
-      const response = await api.get(`auth?ra=${ra}&password=${password}`)
+      // const response = await api.get(`auth?ra=${ra}&password=${password}`)
+      const response = true
       alert(response)
       console.log(response)
 

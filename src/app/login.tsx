@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { TextInput, Button } from 'react-native-paper'
-import { COLORS } from '../constants/Colors'
+import { COLORS } from '../constants/Styles/Colors'
 import { StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Formik, FormikProps } from 'formik'
 import { useAuth } from '../context/AuthContext'
