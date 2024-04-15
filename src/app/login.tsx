@@ -4,8 +4,6 @@ import { TextInput, Button } from 'react-native-paper'
 import { COLORS } from '../constants/Colors'
 import { StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Formik, FormikProps } from 'formik'
-import { router } from 'expo-router'
-import { Link } from 'expo-router'
 import { useAuth } from '../context/AuthContext'
 import * as yup from 'yup'
 
@@ -21,6 +19,7 @@ const formValidationSchema = yup.object({
 
 export default function Login() {
   const { onLogin } = useAuth()
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -28,7 +27,7 @@ export default function Login() {
           initialValues={{ ra: '', password: '' }}
           validationSchema={formValidationSchema}
           onSubmit={(val, actions) => {
-            // onLogin('2039102', 'sadsa')
+            onLogin(val.ra, val.password)
             actions.resetForm()
           }}
         >
@@ -39,6 +38,7 @@ export default function Login() {
                 label="RA"
                 keyboardType="numeric"
                 maxLength={6}
+                // value="123456"
                 value={props.values.ra.toString()}
                 onChangeText={props.handleChange('ra')}
                 style={styles.round}
@@ -46,8 +46,9 @@ export default function Login() {
               <TextInput
                 mode="flat"
                 label="Senha"
-                secureTextEntry
+                // value="123123"
                 value={props.values.password}
+                secureTextEntry
                 onChangeText={props.handleChange('password')}
                 style={styles.round}
               />

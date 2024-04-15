@@ -3,11 +3,13 @@ import { Camera, CameraView } from 'expo-camera/next'
 import React, { useEffect, useState } from 'react'
 import { theme as Theme } from '../constants/Theme'
 import { COLORS } from '../constants/Colors'
+import { useAuth } from '../context/AuthContext'
 
 export function App() {
   const [hasPermission, setHasPermission] = useState<Boolean>(false)
   const [scanned, setScanned] = useState(false)
   const [text, setText] = useState('Not yet scanned')
+  const { onLogout } = useAuth()
 
   const handleBarCodeScanned = ({
     type,
@@ -65,7 +67,12 @@ export function App() {
         />
       </View>
       <Text style={styles.maintext}>{text}</Text>
-
+      <Button
+        title={'Scan again?'}
+        onPress={() => setScanned(false)}
+        color="tomato"
+      />
+      <Button title={'Logout?'} onPress={onLogout} color="tomato" />
       {scanned && (
         <Button
           title={'Scan again?'}

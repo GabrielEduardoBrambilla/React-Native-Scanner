@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AuthProvider, useAuth } from '../context/AuthContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -11,33 +11,41 @@ const Stack = createNativeStackNavigator()
 
 export default function index() {
   return (
-    // <AuthProvider>
-    <Layout />
-    // </AuthProvider>
+    <AuthProvider>
+      <Layout />
+    </AuthProvider>
   )
 }
 
 export const Layout = () => {
-  const { authState, onLogout } = useAuth()
+  const { authState, onLogout, onLogin } = useAuth()
+
+  useEffect(() => {
+    onLogout()
+  }, [])
+
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator>
-        {/* {authState?.authenticated ? ( */}
-        {true ? (
+        {authState?.authenticated ? (
           <Stack.Screen
-            name="Scanner Screen"
+            name="Scanne Screen"
             component={App}
-            options={{
-              autoHideHomeIndicator: true,
-              headerRight: () => (
-                <Button onPress={onLogout}>
-                  <Text>Login</Text>
-                </Button>
-              )
-            }}
+            // options={{
+            //   autoHideHomeIndicator: true,
+            //   headerRight: () => (
+            //     <Button onPress={onLogout}>
+            //       <Text>Logout</Text>
+            //     </Button>
+            //   )
+            // }}
           />
         ) : (
-          <Stack.Screen name="login" component={Login} />
+          <Stack.Screen
+            name="login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
