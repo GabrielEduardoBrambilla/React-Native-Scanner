@@ -1,7 +1,7 @@
 import { StyleSheet, View, Button } from 'react-native'
 import { Camera, CameraView } from 'expo-camera/next'
 import React, { useEffect, useState } from 'react'
-import { TextInput, Text } from 'react-native-paper'
+import { TextInput, Text, useTheme } from 'react-native-paper'
 import { styles } from './styles'
 import { useAuth } from '../../../context/AuthContext'
 
@@ -54,9 +54,20 @@ export function Scanner() {
       </View>
     )
   }
+  const theme = useTheme()
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        height: 750,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.background
+      }}
+    >
       <View style={styles.barcodebox}>
         <CameraView
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -72,16 +83,11 @@ export function Scanner() {
         onPress={() => setScanned(false)}
         color="tomato"
       /> */}
-
-      <Text variant="headlineSmall">
-        Professor: <Text variant="bodyMedium">Gustavo Colombeli</Text>
-      </Text>
-      <Text variant="headlineSmall">
-        Dia: <Text variant="bodyMedium"> 15/04/2023</Text>
-      </Text>
-      <Text variant="headlineSmall">
-        Presença: <Text variant="bodyMedium"> A confirmar</Text>
-      </Text>
+      <View>
+        <Text variant="headlineSmall">Professor: Gustavo Colombeli</Text>
+        <Text variant="headlineSmall">Dia: 15/04/2023</Text>
+        <Text variant="headlineSmall">Presença: A confirmar</Text>
+      </View>
       {scanned && (
         <Button
           title={'Scan again?'}
@@ -89,7 +95,7 @@ export function Scanner() {
           color="tomato"
         />
       )}
-      <Button title={'Logout?'} onPress={onLogout} color="tomato" />
+      <Button title={'Logout ?'} onPress={onLogout} color="tomato" />
     </View>
   )
 }

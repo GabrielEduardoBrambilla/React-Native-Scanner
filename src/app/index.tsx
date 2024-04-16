@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from '../context/AuthContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Scanner } from './pages/scanner'
-import Login from './login'
+import Login from './pages/login'
 import { useTheme } from '../constants/Styles/'
 import { theme } from '../constants/Styles/DarkTheme'
 const Stack = createNativeStackNavigator()
@@ -30,7 +30,7 @@ export const Layout = () => {
 
   return (
     <Stack.Navigator>
-      {false ? (
+      {true ? (
         <Stack.Screen
           name="Scanne Screen"
           component={Scanner}
