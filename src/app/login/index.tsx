@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { TextInput, Button } from 'react-native-paper'
-import { COLORS } from '../constants/Styles/Colors'
 import { StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Formik, FormikProps } from 'formik'
-import { useAuth } from '../context/AuthContext'
 import * as yup from 'yup'
+import { useAuth } from '../../context/AuthContext'
+import { styles } from './styles'
 
 interface FormFields {
   ra: string
@@ -66,26 +66,3 @@ export default function Login() {
     </TouchableWithoutFeedback>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    height: 750,
-    backgroundColor: COLORS.blue[200],
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  form: {
-    display: 'flex',
-    width: 250,
-    gap: 8
-  },
-  round: {
-    borderRadius: 6
-  },
-  button: {
-    marginTop: 8
-  }
-})

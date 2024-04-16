@@ -3,10 +3,10 @@ import React, { useEffect } from 'react'
 import { AuthProvider, useAuth } from '../context/AuthContext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { App } from './app'
+import { Scanner } from './pages/scanner'
 import Login from './login'
 import { useTheme } from '../constants/Styles/'
-
+import { theme } from '../constants/Styles/DarkTheme'
 const Stack = createNativeStackNavigator()
 
 export default function index() {
@@ -29,22 +29,20 @@ export const Layout = () => {
   }, [])
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {true ? (
-          <Stack.Screen
-            name="Scanne Screen"
-            component={App}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      {false ? (
+        <Stack.Screen
+          name="Scanne Screen"
+          component={Scanner}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen
+          name="login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+      )}
+    </Stack.Navigator>
   )
 }
