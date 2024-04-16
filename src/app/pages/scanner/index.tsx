@@ -2,7 +2,7 @@ import { StyleSheet, View, Button } from 'react-native'
 import { Camera, CameraView } from 'expo-camera/next'
 import React, { useEffect, useState } from 'react'
 import { TextInput, Text, useTheme } from 'react-native-paper'
-import { styles } from './styles'
+import { Barcodebox, Container, Maintext } from './styles'
 import { useAuth } from '../../../context/AuthContext'
 
 export function Scanner() {
@@ -36,14 +36,14 @@ export function Scanner() {
 
   if (hasPermission === null) {
     return (
-      <View style={styles.container}>
+      <Container>
         <Text style={{ margin: 10 }}>Pedindo acesso a camera</Text>
-      </View>
+      </Container>
     )
   }
   if (hasPermission === false) {
     return (
-      <View style={styles.container}>
+      <Container>
         <Text style={{ margin: 10 }}>Sem acesso a camera</Text>
         <Button
           title="Permitir o uso da camera"
@@ -51,13 +51,13 @@ export function Scanner() {
             Camera.requestCameraPermissionsAsync()
           }}
         />
-      </View>
+      </Container>
     )
   }
   const theme = useTheme()
 
   return (
-    <View
+    <Container
       style={{
         display: 'flex',
         flex: 1,
@@ -68,7 +68,7 @@ export function Scanner() {
         backgroundColor: theme.colors.background
       }}
     >
-      <View style={styles.barcodebox}>
+      <Barcodebox>
         <CameraView
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
           barcodeScannerSettings={{
@@ -76,8 +76,8 @@ export function Scanner() {
           }}
           style={StyleSheet.absoluteFillObject}
         />
-      </View>
-      <Text style={styles.maintext}>{text}</Text>
+      </Barcodebox>
+      <Maintext>{text}</Maintext>
       {/* <Button
         title={'Scan again?'}
         onPress={() => setScanned(false)}
@@ -96,6 +96,6 @@ export function Scanner() {
         />
       )}
       <Button title={'Logout ?'} onPress={onLogout} color="tomato" />
-    </View>
+    </Container>
   )
 }
