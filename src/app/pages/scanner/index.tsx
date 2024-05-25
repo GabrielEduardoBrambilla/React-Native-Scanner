@@ -1,5 +1,5 @@
 import { StyleSheet, View, Button } from 'react-native'
-import { Camera, CameraView } from 'expo-camera/next'
+import { Camera, CameraView } from 'expo-camera'
 import React, { useEffect, useState } from 'react'
 import { TextInput, Text, useTheme } from 'react-native-paper'
 import { Barcodebox, Container, Maintext } from './styles'
@@ -9,6 +9,7 @@ export function Scanner() {
   const [hasPermission, setHasPermission] = useState<Boolean>(false)
   const [scanned, setScanned] = useState(false)
   const [text, setText] = useState('Not yet scanned')
+  const theme = useTheme()
   const { onLogout } = useAuth()
 
   const handleBarCodeScanned = ({
@@ -25,36 +26,36 @@ export function Scanner() {
   }
 
   // Pede permisão para acessar a camera quando o app carrega
-  useEffect(() => {
-    const getCameraPermissions = async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync()
-      setHasPermission(status === 'granted')
-    }
+  // useEffect(() => {
+  //   const getCameraPermissions = async () => {
+  //     const { status } = await Camera.requestCameraPermissionsAsync()
+  //     setHasPermission(status === 'granted' ? true : false)
+  //   }
 
-    getCameraPermissions()
-  }, [])
+  //   getCameraPermissions()
+  // }, [])
 
-  if (hasPermission === null) {
-    return (
-      <Container>
-        <Text style={{ margin: 10 }}>Pedindo acesso a camera</Text>
-      </Container>
-    )
-  }
-  if (hasPermission === false) {
-    return (
-      <Container>
-        <Text style={{ margin: 10 }}>Sem acesso a camera</Text>
-        <Button
-          title="Permitir o uso da camera"
-          onPress={() => {
-            Camera.requestCameraPermissionsAsync()
-          }}
-        />
-      </Container>
-    )
-  }
-  const theme = useTheme()
+  // if (hasPermission === null) {
+  //   return (
+  //     <Container>
+  //       <Text style={{ margin: 10 }}>Pedindo acesso a camera</Text>
+  //     </Container>
+  //   )
+  // }
+  // if (hasPermission === false) {
+  //   return (
+  //     <Container>
+  //       <Text style={{ margin: 10 }}>Sem acesso a camera</Text>
+  //       <Button
+  //         title="Permitir o uso da camera"
+  //         onPress={async () => {
+  //           const { status } = await Camera.requestCameraPermissionsAsync()
+  //           setHasPermission(status === 'granted' ? true : false)
+  //         }}
+  //       />
+  //     </Container>
+  //   )
+  // }
 
   return (
     <Container
@@ -77,12 +78,10 @@ export function Scanner() {
           style={StyleSheet.absoluteFillObject}
         />
       </Barcodebox>
-      <Maintext>{text}</Maintext>
-      {/* <Button
-        title={'Scan again?'}
-        onPress={() => setScanned(false)}
-        color="tomato"
-      /> */}
+      <Maintext>
+        <Text>{text}</Text>
+      </Maintext>
+
       <View>
         <Text variant="headlineSmall">Professor: Gustavo Colombeli</Text>
         <Text variant="headlineSmall">Dia: 15/04/2023</Text>
